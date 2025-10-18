@@ -34,7 +34,7 @@
         </form>
       </header>
       <main>
-        <div class="weather-app data">
+        <div class="weather-app-data">
           <div>
             <h2 class="actual-city">Vienna</h2>
             <p class="weather-app-details">
@@ -46,7 +46,13 @@
             </p>
           </div>
           <div class="weather-app-temperature-container">
-            <div id="icon-actual-weather">☀️</div>
+            <div id="icon-actual-weather">
+              <img
+                class="icon-actual-weather"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
+            </div>
             <div
               id="temperature-value-actual-weather"
               class="temperature-value-actual-weather"
@@ -60,72 +66,100 @@
               °C
             </div>
           </div>
-          <div class="weather-forcast-container">
-            <div id="today">
-              <div id="today-name">Tue</div>
-              <div id="today-symbol">⛅</div>
-              <div class="today-temperature">
-                <span
-                  id="today-temperature-max"
-                  class="forecast-temperature-max"
-                  >20°</span
-                >
-                <span id="today-temperature-min">12°</span>
-              </div>
+        </div>
+        <div class="weather-forecast-container">
+          <div id="today">
+            <div id="today-name" class="forecast-day-name">Tue</div>
+            <div id="today-icon">
+              <img
+                class="today-icon forecast-icon"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
             </div>
-            <div id="tomorrow">
-              <div id="tomorrow-name">Tue</div>
-              <div id="tomorrow-symbol">⛅</div>
-              <div class="tomorrow-temperature">
-                <span
-                  id="tomorrow-temperature-max"
-                  class="forecast-temperature-max"
-                  >20°</span
-                >
-                <span id="tomorrow-temperature-min">12°</span>
-              </div>
+            <div class="forecast-temperature">
+              <span id="today-temperature-max" class="forecast-temperature-max"
+                >20°</span
+              >
+              <span id="today-temperature-min">12°</span>
             </div>
-            <div id="tomorrow-plus-1">
-              <div id="tomorrow-plus-1-name">Wed</div>
-              <div id="tomorrow-plus-1-symbol">⛅</div>
-              <div class="tomorrow-plus-1-temperature">
-                <span
-                  id="tomorrow-plus-1-temperature-max"
-                  class="forecast-temperature-max"
-                  >20°</span
-                >
-                <span id="tomorrow-plus-1-temperature-min">12°</span>
-              </div>
+          </div>
+          <div id="tomorrow">
+            <div id="tomorrow-name" class="forecast-day-name">Wed</div>
+            <div id="tomorrow-icon">
+              <img
+                class="tomorrow-icon forecast-icon"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
             </div>
-            <div id="tomorrow-plus-2">
-              <div id="tomorrow-plus-2-name">Thu</div>
-              <div id="tomorrow-plus-2-symbol">⛅</div>
-              <div class="tomorrow-plus-2-temperature">
-                <span
-                  id="tomorrow-plus-2-temperature-max"
-                  class="forecast-temperature-max"
-                  >20°</span
-                >
-                <span id="tomorrow-plus-2-temperature-min">12°</span>
-              </div>
+            <div class="forecast-temperature">
+              <span
+                id="tomorrow-temperature-max"
+                class="forecast-temperature-max"
+                >20°</span
+              >
+              <span id="tomorrow-temperature-min">12°</span>
             </div>
-            <div id="tomorrow-plus-3">
-              <div id="tomorrow-plus-3-name">Fri</div>
-              <div id="tomorrow-plus-3-symbol">⛅</div>
-              <div class="tomorrow-plus-3-temperature">
-                <span
-                  id="tomorrow-plus-3-temperature-max"
-                  class="forecast-temperature-max"
-                  >20°</span
-                >
-                <span id="tomorrow-plus-3-temperature-min">12°</span>
-              </div>
+          </div>
+          <div id="tomorrow-plus-1">
+            <div id="tomorrow-plus-1-name" class="forecast-day-name">Thu</div>
+            <div id="tomorrow-plus-1-icon">
+              <img
+                class="tomorrow-plus-1-icon forecast-icon"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
+            </div>
+            <div class="forecast-temperature">
+              <span
+                id="tomorrow-plus-1-temperature-max"
+                class="forecast-temperature-max"
+                >20°</span
+              >
+              <span id="tomorrow-plus-1-temperature-min">12°</span>
+            </div>
+          </div>
+          <div id="tomorrow-plus-2">
+            <div id="tomorrow-plus-2-name" class="forecast-day-name">Fri</div>
+            <div id="tomorrow-plus-2-icon">
+              <img
+                class="tomorrow-plus-2-icon forecast-icon"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
+            </div>
+            <div class="forecast-temperature">
+              <span
+                id="tomorrow-plus-2-temperature-max"
+                class="forecast-temperature-max"
+                >20°</span
+              >
+              <span id="tomorrow-plus-2-temperature-min">12°</span>
+            </div>
+          </div>
+          <div id="tomorrow-plus-3">
+            <div id="tomorrow-plus-3-name" class="forecast-day-name">Sat</div>
+            <div id="tomorrow-plus-3-icon">
+              <img
+                class="tomorrow-plus-3-icon forecast-icon"
+                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                alt="weather-icon"
+              />
+            </div>
+            <div class="forecast-temperature">
+              <span
+                id="tomorrow-plus-3-temperature-max"
+                class="forecast-temperature-max"
+                >20°</span
+              >
+              <span id="tomorrow-plus-3-temperature-min">12°</span>
             </div>
           </div>
         </div>
       </main>
       <footer>
-        Coded by
+        This project was coded by
         <a
           href="https://github.com/WunschCoding"
           target="_blank"
