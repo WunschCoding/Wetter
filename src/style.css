@@ -84,3 +84,28 @@ a {
   margin-top: 6px;
   font-size: 28px;
 }
+.weather-app-forecast {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 15px;
+}
+.forecast-day-name {
+  font-size: 16px;
+  color: rgba(39, 33, 66, 0.4);
+}
+.forecast-icon-day {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+}
+.forecast-temperature-day {
+  display: flex;
+  justify-content: space-evenly;
+  color: #f65282;
+  font-size: 16px;
+  font-weight: bold;
+}
+.forecast-min-temperature-day {
+  opacity: 0.6;
+}
