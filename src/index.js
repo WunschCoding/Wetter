@@ -24,10 +24,15 @@ function getWeatherData(response) {
   let humidity = document.querySelector("#humidity") + "%";
   humidity.innerHTML = response.data.temperature.humidity;
   let windSpeed = document.querySelector("#wind-speed");
-  windSpeed.innerHTML = response.data.wind.speed;
+  windSpeed.innerHTML = round(response.data.wind.speed, 1);
   let iconActualWeather = document.querySelector(".icon-actual-weather");
   iconActualWeather.src = response.data.condition.icon_url;
   insertTime();
+}
+
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
 }
 
 function insertTime() {
@@ -40,7 +45,7 @@ function insertTime() {
   let day = actualTime.getDay();
   let dayName = dayNumberToDayname(day);
   let time = document.querySelector("#time");
-  time.innerHTML = `${dayName}, ${hour}:${minute}`;
+  time.innerHTML = `${dayName} ${hour}:${minute}`;
 }
 
 function dayNumberToDayname(dayNumber) {
