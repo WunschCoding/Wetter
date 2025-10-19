@@ -15,6 +15,14 @@ function searchCity(event) {
   searchFormInput.value = null;
 }
 
+function firstCity() {
+  let city = "Vienna";
+  let apiKey = "3412to3ec6a4dfdcbfe0195213b47c9a";
+  let units = "metric";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(getWeatherData);
+}
+
 function getWeatherData(response) {
   console.log(response.data);
   let actualCity = document.querySelector("#actual-city");
@@ -64,6 +72,6 @@ function dayNumberToDayname(dayNumber) {
   ];
   return dayNames[dayNumber];
 }
-
+firstCity();
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", searchCity);
