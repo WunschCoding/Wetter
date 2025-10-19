@@ -52,15 +52,6 @@ function getWeatherForecast(response) {
   let forecastDays = document.querySelectorAll(".weather-forecast-day");
 
   for (let i = 0; i < forecastDays.length; i++) {
-    let forcastDayName = forecastDays[i].querySelector(".forecast-day-name");
-    if (actualDay + i <= 6) {
-      forcastDayName.innerHTML = dayNumberToDayname(actualDay + i).substring(
-        0,
-        3
-      );
-    } else {
-      forcastDayName.innerHTML = dayNumberToDayname(0).substring(0, 3);
-    }
     let forecastIconDay = forecastDays[i].querySelector(".forecast-icon-day");
     forecastIconDay.src = response.data.daily[i].condition.icon_url;
     let forecastMaxTemperatureDay = forecastDays[i].querySelector(
@@ -75,7 +66,6 @@ function getWeatherForecast(response) {
     forecastMinTemperatureDay.innerHTML = Math.round(
       response.data.daily[i].temperature.minimum
     );
-    //console.log(response.data.daily[i].temperature.minimum);
   }
 }
 
@@ -110,9 +100,20 @@ function dayNumberToDayname(dayNumber) {
   return dayNames[dayNumber];
 }
 
-function displayForecast() {
+function displayForecast(amountDays) {
+  let forecastAmountDay = amountDays;
   let forecast = document.querySelector("#forecast");
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu"];
+  let actualDay = new Date().getDay();
+  let days = [];
+
+  for (let i = 0; i < forecastAmountDay; i++) {
+    if (actualDay + i <= 6) {
+      days.push(dayNumberToDayname(actualDay + i).substring(0, 3));
+    } else {
+      days.push(dayNumberToDayname(0).substring(0, 3));
+    }
+  }
+
   let forecastHtml = "";
 
   days.forEach(function (day) {
@@ -142,7 +143,7 @@ function displayForecast() {
   forecast.innerHTML = forecastHtml;
 }
 
-displayForecast();
+displayForecast(6);
 
 firstCity();
 let searchForm = document.querySelector("#search-form");
