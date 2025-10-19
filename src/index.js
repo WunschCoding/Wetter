@@ -27,6 +27,10 @@ function getWeatherData(response) {
   windSpeed.innerHTML = round(response.data.wind.speed, 1);
   let iconActualWeather = document.querySelector(".icon-actual-weather");
   iconActualWeather.src = response.data.condition.icon_url;
+  let actualTemperature = document.querySelector(
+    "#temperature-value-actual-weather"
+  );
+  actualTemperature.innerHTML = Math.round(response.data.temperature.current);
   insertTime();
 }
 
