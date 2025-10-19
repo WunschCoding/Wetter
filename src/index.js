@@ -7,8 +7,10 @@ function searchCity(event) {
     let apiKey = "3412to3ec6a4dfdcbfe0195213b47c9a";
     let units = "metric";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
-
     axios.get(apiUrl).then(getWeatherData);
+
+    let apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${units}`;
+    //axios.get(apiUrlForecast).then(getWeatherForecast);
   } else {
     alert("Please enter at least 3 characters");
   }
@@ -21,10 +23,12 @@ function firstCity() {
   let units = "metric";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(getWeatherData);
+  let apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${units}`;
+  axios.get(apiUrlForecast).then(getWeatherForecast);
 }
 
 function getWeatherData(response) {
-  console.log(response.data);
+  //console.log(response.data);
   let actualCity = document.querySelector("#actual-city");
   actualCity.innerHTML = response.data.city;
   let description = document.querySelector("#description");
@@ -40,6 +44,45 @@ function getWeatherData(response) {
   );
   actualTemperature.innerHTML = Math.round(response.data.temperature.current);
   insertTime();
+}
+
+function getWeatherForecast(response) {
+  //console.log(response);
+  let actualDay = new Date().getDay();
+  let forecastDays = document.querySelectorAll(".weather-forecast-day");
+
+  for (let i = 0; i < forecastDays.length; i++) {
+    let forcastDayName = forecastDays[i].querySelector("#forecast-day-name");
+    if (actualDay + i <= 6) {
+      forcastDayName.innerHTML = dayNumberToDayname(actualDay + i).substring(
+        0,
+        3
+      );
+    } else {
+      forcastDayName.innerHTML = dayNumberToDayname(0).substring(0, 3);
+    }
+    let forecastIconDay = forecastDays[i].querySelector("#forecast-icon-day");
+    forecastIconDay.src = response.data.daily[i].condition.icon_url;
+    let forecastMaxTemperatureDay = forecastDays[i].querySelector(
+      "#forecast-max-temperature-day"
+    );
+    forecastMaxTemperatureDay.innerHTML = Math.round(
+      response.data.daily[i].temperature.maximum
+    );
+    let forecastMinTemperatureDay = forecastDays[i].querySelector(
+      "#forecast-min-temperature-day"
+    );
+    forecastMinTemperatureDay.innerHTML = Math.round(
+      response.data.daily[i].temperature.minimum
+    );
+    //console.log(response.data.daily[i].temperature.minimum);
+  }
+}
+
+function insertForecastData(element) {
+  let actualDay = new Date().getDay();
+  let elementName = element.querySelector("#forecast-day-name");
+  elementName.innerHTML = dayNumberToDayname(actualDay + 1).substring(0, 3);
 }
 
 function round(value, precision) {
