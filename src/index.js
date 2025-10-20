@@ -3,32 +3,23 @@ function searchCity(event) {
   let searchFormInput = document.querySelector("#search-form-input");
 
   if (searchFormInput.value.length > 2) {
-    let city = searchFormInput.value;
-    let apiKey = "3412to3ec6a4dfdcbfe0195213b47c9a";
-    let units = "metric";
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
-    axios.get(apiUrl).then(getWeatherData);
-
-    let apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${units}`;
-    axios.get(apiUrlForecast).then(getWeatherForecast);
+    startGetData(searchFormInput.value);
   } else {
     alert("Please enter at least 3 characters");
   }
   searchFormInput.value = null;
 }
 
-function firstCity() {
-  let city = "Vienna";
+function startGetData(city) {
   let apiKey = "3412to3ec6a4dfdcbfe0195213b47c9a";
   let units = "metric";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(getWeatherData);
   let apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${units}`;
-  axios.get(apiUrlForecast).then(getWeatherForecast);
+  axios.get(apiUrlForecast).then(displayForecast);
 }
 
 function getWeatherData(response) {
-  //console.log(response.data);
   let actualCity = document.querySelector("#actual-city");
   actualCity.innerHTML = response.data.city;
   let description = document.querySelector("#description");
@@ -44,30 +35,6 @@ function getWeatherData(response) {
   );
   actualTemperature.innerHTML = Math.round(response.data.temperature.current);
   insertTime();
-}
-
-function getWeatherForecast(response) {
-  console.log(response);
-  let forecastDays = document.querySelectorAll(".weather-forecast-day");
-
-  for (let i = 0; i < forecastDays.length; i++) {
-    let forecastDay = forecastDays[i].querySelector(".forecast-day-name");
-    forecastDay.innerHTML = formatTimestampToDate(response.data.daily[i].time);
-    let forecastIconDay = forecastDays[i].querySelector(".forecast-icon-day");
-    forecastIconDay.src = response.data.daily[i].condition.icon_url;
-    let forecastMaxTemperatureDay = forecastDays[i].querySelector(
-      ".forecast-max-temperature-day"
-    );
-    forecastMaxTemperatureDay.innerHTML = Math.round(
-      response.data.daily[i].temperature.maximum
-    );
-    let forecastMinTemperatureDay = forecastDays[i].querySelector(
-      ".forecast-min-temperature-day"
-    );
-    forecastMinTemperatureDay.innerHTML = Math.round(
-      response.data.daily[i].temperature.minimum
-    );
-  }
 }
 
 function formatTimestampToDate(timestamp) {
@@ -107,51 +74,45 @@ function dayNumberToDayname(dayNumber) {
   return dayNames[dayNumber];
 }
 
-function displayForecast(amountDays) {
-  let forecastAmountDay = amountDays;
-  let forecast = document.querySelector("#forecast");
-  let actualDay = new Date().getDay();
-  let days = [];
-
-  for (let i = 0; i < forecastAmountDay; i++) {
-    if (actualDay <= 6) {
-      days.push(dayNumberToDayname(actualDay + i).substring(0, 3));
-    } else {
-      days.push(dayNumberToDayname(0).substring(0, 3));
-    }
-  }
+function displayForecast(response) {
+  console.log(response.data);
 
   let forecastHtml = "";
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      `          
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `          
           <div class="weather-forecast-day">
-            <div class="forecast-day-name">${day}</div>
+            <div class="forecast-day-name">${formatTimestampToDate(
+              day.time
+            )}</div>
             <div>
               <img
                 class="forecast-icon-day"
-                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png"
+                src="${day.condition.icon_url}"
                 alt="weather-icon"
               />
             </div>
             <div class="forecast-temperature-day">
-              <div class="forecast-max-temperature-day">20°</div>
+              <div class="forecast-max-temperature-day">${Math.round(
+                day.temperature.maximum
+              )}</div>
               <div
                 class="forecast-min-temperature-day"
               >
-                10°
+                ${Math.round(day.temperature.minimum)}
               </div>
             </div>
           </div>
 `;
+    }
   });
+
   forecast.innerHTML = forecastHtml;
 }
 
-displayForecast(6);
-
-firstCity();
+startGetData("Vienna");
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", searchCity);
