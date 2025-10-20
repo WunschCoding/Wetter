@@ -47,11 +47,12 @@ function getWeatherData(response) {
 }
 
 function getWeatherForecast(response) {
-  //console.log(response);
-  let actualDay = new Date().getDay();
+  console.log(response);
   let forecastDays = document.querySelectorAll(".weather-forecast-day");
 
   for (let i = 0; i < forecastDays.length; i++) {
+    let forecastDay = forecastDays[i].querySelector(".forecast-day-name");
+    forecastDay.innerHTML = formatTimestampToDate(response.data.daily[i].time);
     let forecastIconDay = forecastDays[i].querySelector(".forecast-icon-day");
     forecastIconDay.src = response.data.daily[i].condition.icon_url;
     let forecastMaxTemperatureDay = forecastDays[i].querySelector(
@@ -67,6 +68,12 @@ function getWeatherForecast(response) {
       response.data.daily[i].temperature.minimum
     );
   }
+}
+
+function formatTimestampToDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[date.getDay()];
 }
 
 function round(value, precision) {
@@ -107,7 +114,7 @@ function displayForecast(amountDays) {
   let days = [];
 
   for (let i = 0; i < forecastAmountDay; i++) {
-    if (actualDay + i <= 6) {
+    if (actualDay <= 6) {
       days.push(dayNumberToDayname(actualDay + i).substring(0, 3));
     } else {
       days.push(dayNumberToDayname(0).substring(0, 3));
